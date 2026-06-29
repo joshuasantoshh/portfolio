@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ff003c; /* Neon Red */
+  --color-secondary: #ff3366; /* Hot Pink */
+  --color-dark-bg: #000000; /* Absolute Black */
+  --color-card-bg: rgba(5, 5, 5, 0.85);
+  --color-card-border: rgba(255, 0, 60, 0.15);
+  
+  --font-sans: 'Geist', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', 'Fira Code', monospace;
+  
+  --animate-gradient-x: gradient-x 15s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 8s ease-in-out infinite;
+  --animate-scanline: scanline 8s linear infinite;
+  
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.25; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
+  }
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+}
+
+:root {
+  --background: #000000;
+  --foreground: #f3f4f6;
+  scroll-behavior: smooth;
+}
+
+/* Hide default cursor globally to support custom cyberpunk cursor */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  position: relative;
+}
+
+/* Cyber Grid Backdrop */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 0, 60, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 0, 60, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animated Scanline Overlay (Retro Cyber HUD) */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 0, 60, 0) 0%,
+    rgba(255, 0, 60, 0.03) 10%,
+    rgba(255, 0, 60, 0) 20%
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: var(--animate-scanline);
+}
+
+/* Cybernetic Card Styling (Apple-Cyber Hybrid) */
+.cyber-card {
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 0, 60, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  /* Tech corner cuts */
+  clip-path: polygon(
+    0 0, 
+    calc(100% - 16px) 0, 
+    100% 16px, 
+    100% 100%, 
+    16px 100%, 
+    0 calc(100% - 16px)
+  );
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+  border-color: rgba(255, 0, 60, 0.4);
+  box-shadow: 0 0 20px rgba(255, 0, 60, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Tech Corners outline helper */
+.cyber-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #ff003c;
+  border-left: 2px solid #ff003c;
+  pointer-events: none;
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #ff003c;
+  border-right: 2px solid #ff003c;
+  pointer-events: none;
+}
+
+.glass-nav {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 0, 60, 0.12);
+}
+
+/* Glowing Orbs */
+.glow-sphere {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border: 1px solid rgba(255, 0, 60, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff003c;
+}
+
+/* Text Gradients (Neon Cyber Red) */
+.text-gradient {
+  background: linear-gradient(135deg, #ff003c 0%, #ff3366 60%, #ff80a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-red {
+  background: linear-gradient(135deg, #ff1a4a 0%, #b30022 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glitch Animation Classes */
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -1px 0 #ff003c;
+  top: 0;
+  color: white;
+  background: black;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0); 
+  animation: noise-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-anim {
+  0% { clip: rect(12px, 9999px, 66px, 0); }
+  5% { clip: rect(32px, 9999px, 5px, 0); }
+  10% { clip: rect(98px, 9999px, 29px, 0); }
+  15% { clip: rect(64px, 9999px, 98px, 0); }
+  20% { clip: rect(12px, 9999px, 33px, 0); }
+  25% { clip: rect(5px, 9999px, 87px, 0); }
+}
+
+/* Custom utility styles */
+.timeline-border::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #ff003c, #ff3366, transparent);
+}
